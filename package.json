@@ -1,0 +1,34 @@
+{
+  "name": "fastify-formbody",
+  "version": "1.0.0",
+  "description": "A module for Fastify to parse x-www-form-urlencoded bodies",
+  "main": "formbody.js",
+  "scripts": {
+    "test": "tap 'test/**/*.test.js'"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/jsumners/fastify-formbody.git"
+  },
+  "keywords": [
+    "fastify",
+    "x-www-form-urlencoded"
+  ],
+  "author": "James Sumners <james.sumners@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jsumners/fastify-formbody/issues"
+  },
+  "homepage": "https://github.com/jsumners/fastify-formbody#readme",
+  "devDependencies": {
+    "abstract-logging": "^1.0.0",
+    "fastify": "^0.26.2",
+    "request": "^2.81.0",
+    "standard": "^10.0.3",
+    "tap": "^10.7.2"
+  },
+  "dependencies": {
+    "fastify-plugin": "^0.1.0",
+    "qs": "^6.5.0"
+  }
+}
