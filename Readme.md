@@ -9,7 +9,7 @@ the content type `application/x-www-form-urlencoded`.
 
 Given the following code:
 
-```
+```js
 const fastify = require('fastify')()
 
 fastify.register(require('fastify-formbody'), {}, (err) => {
@@ -27,13 +27,13 @@ fastify.listen(8000, (err) => {
 
 And a `POST` body of:
 
-```
+```html
 foo=foo&bar=bar&answer=42
 ```
 
 The sent reply would be the object:
 
-```
+```js
 {
   foo: 'foo',
   bar: 'bar',
