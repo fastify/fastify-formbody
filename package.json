@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+ssh://git@github.com/jsumners/fastify-formbody.git"
+    "url": "git+ssh://git@github.com/fastify/fastify-formbody.git"
   },
   "keywords": [
     "fastify",
@@ -17,9 +17,9 @@
   "author": "James Sumners <james.sumners@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jsumners/fastify-formbody/issues"
+    "url": "https://github.com/fastify/fastify-formbody/issues"
   },
-  "homepage": "https://github.com/jsumners/fastify-formbody#readme",
+  "homepage": "https://github.com/fastify/fastify-formbody#readme",
   "devDependencies": {
     "abstract-logging": "^1.0.0",
     "fastify": "^0.26.2",
