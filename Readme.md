@@ -3,7 +3,7 @@
 A simple plugin for [Fastify][fastify] that adds a content type parser for
 the content type `application/x-www-form-urlencoded`.
 
-[fastify]: http://www.fastify.io/
+[fastify]: https://www.fastify.io/
 
 ## Example
 
@@ -12,9 +12,7 @@ Given the following code:
 ```js
 const fastify = require('fastify')()
 
-fastify.register(require('fastify-formbody'), {}, (err) => {
-  if (err) throw err
-})
+fastify.register(require('fastify-formbody'))
 
 fastify.post('/', (req, reply) => {
   reply.send(req.body)
