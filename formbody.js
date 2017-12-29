@@ -16,5 +16,7 @@ function formBodyPlugin (fastify, options, next) {
   next()
 }
 
-module.exports = fp(formBodyPlugin, '>=0.15.0')
+module.exports = fp(formBodyPlugin, {
+  fastify: '>=0.37.0'
+})
 module.exports.internals = internals
