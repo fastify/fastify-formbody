@@ -10,7 +10,7 @@ test('successful route', (t) => {
   t.plan(1)
   try {
     fastify.post('/test1', (req, res) => {
-      res.send(req.body)
+      res.send(Object.assign({}, req.body, {message: 'done'}))
     })
     t.pass()
   } catch (e) {
@@ -35,7 +35,7 @@ fastify.listen(0, (err) => {
     req({uri: '/test1', form: {foo: 'foo'}}, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 200)
-      t.deepEqual(JSON.parse(body), {foo: 'foo'})
+      t.deepEqual(JSON.parse(body), {foo: 'foo', message: 'done'})
     })
   })
 })
