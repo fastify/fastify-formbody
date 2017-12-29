@@ -2,7 +2,7 @@
 
 const tap = require('tap')
 const test = tap.test
-const fastify = require('fastify')({logger: require('abstract-logging')})
+const fastify = require('fastify')()
 const request = require('request')
 const plugin = require('../')
 

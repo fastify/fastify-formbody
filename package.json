@@ -4,7 +4,10 @@
   "description": "A module for Fastify to parse x-www-form-urlencoded bodies",
   "main": "formbody.js",
   "scripts": {
-    "test": "tap 'test/**/*.test.js'"
+    "test": "tap 'test/**/*.test.js'",
+    "test-ci": "tap --cov 'test/**/*.test.js'",
+    "lint": "standard | snazzy",
+    "lint-ci": "standard"
   },
   "repository": {
     "type": "git",
@@ -21,9 +24,9 @@
   },
   "homepage": "https://github.com/fastify/fastify-formbody#readme",
   "devDependencies": {
-    "abstract-logging": "^1.0.0",
     "fastify": "^0.37.0",
     "request": "^2.81.0",
+    "snazzy": "^7.0.0",
     "standard": "^10.0.3",
     "tap": "^10.7.2"
   },
