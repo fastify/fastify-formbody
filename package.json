@@ -22,7 +22,7 @@
   "homepage": "https://github.com/fastify/fastify-formbody#readme",
   "devDependencies": {
     "abstract-logging": "^1.0.0",
-    "fastify": "^0.26.2",
+    "fastify": "^0.37.0",
     "request": "^2.81.0",
     "standard": "^10.0.3",
     "tap": "^10.7.2"

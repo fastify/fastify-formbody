@@ -8,7 +8,7 @@ internals.contentParser = function (req, done) {
   let body = ''
   req.on('error', done)
   req.on('data', (data) => { body = body + data })
-  req.on('end', () => { return done(qs.parse(body)) })
+  req.on('end', () => { return done(null, qs.parse(body)) })
 }
 
 function formBodyPlugin (fastify, options, next) {
