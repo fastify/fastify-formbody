@@ -3,20 +3,37 @@
 const fp = require('fastify-plugin')
 const qs = require('qs')
 
-const internals = {}
-internals.contentParser = function (req, done) {
-  let body = ''
-  req.on('error', done)
-  req.on('data', (data) => { body = body + data })
-  req.on('end', () => { return done(null, qs.parse(body)) })
+const DEFAULT_BODY_LIMIT = 1024 * 1024 // 1 MiB
+const defaults = {
+  bodyLimit: DEFAULT_BODY_LIMIT
 }
 
 function formBodyPlugin (fastify, options, next) {
-  fastify.addContentTypeParser('application/x-www-form-urlencoded', internals.contentParser)
+  const opts = Object.assign({}, defaults, options || {})
+
+  function contentParser (req, done) {
+    const bodyLimit = opts.bodyLimit
+    const tooLargeError = Error('Form data exceeds allowed limit: ' + bodyLimit)
+    const contentLength = (req.headers['content-length'])
+      ? Number.parseInt(req.headers['content-length'], 10)
+      : null
+    if (contentLength > bodyLimit) return done(tooLargeError)
+
+    let body = ''
+    req.on('error', done)
+    req.on('data', (data) => {
+      body = body + data
+      if (body.length > bodyLimit) {
+        return done(tooLargeError)
+      }
+    })
+    req.on('end', () => { return done(null, qs.parse(body)) })
+  }
+
+  fastify.addContentTypeParser('application/x-www-form-urlencoded', contentParser)
   next()
 }
 
 module.exports = fp(formBodyPlugin, {
-  fastify: '>=0.37.0'
+  fastify: '>=0.38.0'
 })
-module.exports.internals = internals

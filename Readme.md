@@ -39,6 +39,14 @@ The sent reply would be the object:
 }
 ```
 
+## Options
+
+The plugin accepts an options object with the following properties:
+
++ `bodyLimit` (Default: `1048576`): the maximum amount of bytes to process
+before returning an error. If the limit is exceeded, a `500` error will be
+returned immediately.
+
 ## License
 
 [MIT License](http://jsumners.mit-license.org/)
