@@ -9,6 +9,10 @@
     "lint": "standard | snazzy",
     "lint-ci": "standard"
   },
+  "precommit": [
+    "lint",
+    "test"
+  ],
   "repository": {
     "type": "git",
     "url": "git+ssh://git@github.com/fastify/fastify-formbody.git"
@@ -25,6 +29,7 @@
   "homepage": "https://github.com/fastify/fastify-formbody#readme",
   "devDependencies": {
     "fastify": "^0.38.0",
+    "pre-commit": "^1.2.2",
     "request": "^2.81.0",
     "snazzy": "^7.0.0",
     "standard": "^10.0.3",
