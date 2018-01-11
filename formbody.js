@@ -14,6 +14,7 @@ function formBodyPlugin (fastify, options, next) {
   function contentParser (req, done) {
     const bodyLimit = opts.bodyLimit
     const tooLargeError = Error('Form data exceeds allowed limit: ' + bodyLimit)
+    tooLargeError.statusCode = 413
     const contentLength = (req.headers['content-length'])
       ? Number.parseInt(req.headers['content-length'], 10)
       : null
