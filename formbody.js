@@ -20,14 +20,27 @@ function formBodyPlugin (fastify, options, next) {
     if (contentLength > bodyLimit) return done(tooLargeError)
 
     let body = ''
-    req.on('error', done)
-    req.on('data', (data) => {
+    req.on('error', errorListener)
+    req.on('data', dataListener)
+    req.on('end', endListener)
+
+    function errorListener (err) {
+      done(err)
+    }
+
+    function dataListener (data) {
       body = body + data
       if (body.length > bodyLimit) {
-        return done(tooLargeError)
+        req.removeListener('error', errorListener)
+        req.removeListener('data', dataListener)
+        req.removeListener('end', endListener)
+        done(tooLargeError)
       }
-    })
-    req.on('end', () => { return done(null, qs.parse(body)) })
+    }
+
+    function endListener () {
+      done(null, qs.parse(body))
+    }
   }
 
   fastify.addContentTypeParser('application/x-www-form-urlencoded', contentParser)
