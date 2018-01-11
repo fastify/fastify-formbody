@@ -60,3 +60,47 @@ test('cannot exceed body limit', (t) => {
     })
   })
 })
+
+test('cannot exceed body limit when Content-Length is not available', (t) => {
+  t.plan(3)
+  const fastify = Fastify()
+
+  fastify.addHook('onSend', (request, reply, payload, next) => {
+    reply.send = function mockSend (arg) {
+      t.fail('reply.send() was called multiple times')
+    }
+    setTimeout(next, 1)
+  })
+
+  fastify
+    .register(plugin, {bodyLimit: 10})
+    .post('/limited', (req, res) => {
+      res.send(Object.assign({}, req.body, {message: 'done'}))
+    })
+
+  fastify.listen(0, (err) => {
+    if (err) tap.error(err)
+    fastify.server.unref()
+
+    const reqOpts = {
+      method: 'POST',
+      baseUrl: 'http://localhost:' + fastify.server.address().port,
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded'
+      }
+    }
+    const req = request.defaults(reqOpts)
+    var sent = false
+    const payload = require('stream').Readable({
+      read: function () {
+        this.push(sent ? null : Buffer.alloc(70000, 'a'))
+        sent = true
+      }
+    })
+    req({uri: '/limited', body: payload}, (err, response, body) => {
+      t.error(err)
+      t.strictEqual(response.statusCode, 500)
+      t.is(JSON.parse(body).message, 'Form data exceeds allowed limit: 10')
+    })
+  })
+})
