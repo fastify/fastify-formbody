@@ -2,6 +2,10 @@
 
 const fastify = require('fastify')()
 
+fastify.addHook('onSend', (request, reply, payload, next) => {
+  setTimeout(next, 1)
+})
+
 fastify
   .register(require('../'), {bodyLimit: 500})
   .post('/', function (req, reply) {

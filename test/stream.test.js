@@ -6,7 +6,7 @@ const path = require('path')
 const test = require('tap').test
 
 test('connection ends when limit reached', (t) => {
-  t.plan(5)
+  t.plan(3)
   const proc = fork(path.join(__dirname, 'server.js'))
 
   t.tearDown(() => proc.send('stop'))
@@ -30,6 +30,7 @@ test('connection ends when limit reached', (t) => {
         const err = JSON.parse(d)
         t.ok(err.message)
         t.is(err.message, 'Form data exceeds allowed limit: 500')
+        proc.kill()
       })
     }).on('error', (err) => {
       t.fail('received request error', err)
@@ -37,15 +38,10 @@ test('connection ends when limit reached', (t) => {
     })
 
     const buff = Buffer.alloc(100000, 'a')
-    for (var i = 0; i < 20000; i += 1) {
+    for (var i = 0; i < 10000; i += 1) {
       req.write(buff)
     }
 
     req.end()
-  })
-
-  proc.on('end', (code, signal) => {
-    t.is(code, 0)
-    t.is(code, 'SIGTERM')
   })
 })
