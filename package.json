@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/fastify/fastify-formbody#readme",
   "devDependencies": {
-    "fastify": "^1.0.0-rc.2",
+    "fastify": "^1.0.0-rc.3",
     "pre-commit": "^1.2.2",
     "request": "^2.83.0",
     "snazzy": "^7.0.0",
