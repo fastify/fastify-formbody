@@ -45,7 +45,8 @@ The plugin accepts an options object with the following properties:
 
 + `bodyLimit` (Default: `1048576`): the maximum amount of bytes to process
 before returning an error. If the limit is exceeded, a `500` error will be
-returned immediately.
+returned immediately. When set to `undefined` the limit will be set to whatever
+is configured on the parent Fastify instance.
 
 ## License
 
