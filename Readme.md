@@ -1,5 +1,7 @@
 # fastify-formbody
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/fastify/fastify-formbody.svg)](https://greenkeeper.io/)
+
 A simple plugin for [Fastify][fastify] that adds a content type parser for
 the content type `application/x-www-form-urlencoded`.
 
