@@ -45,10 +45,13 @@ The sent reply would be the object:
 
 The plugin accepts an options object with the following properties:
 
-+ `bodyLimit` (Default: `1048576`): the maximum amount of bytes to process
++ `bodyLimit`: the maximum amount of bytes to process
 before returning an error. If the limit is exceeded, a `500` error will be
 returned immediately. When set to `undefined` the limit will be set to whatever
-is configured on the parent Fastify instance.
+is configured on the parent Fastify instance. The default value is
+whatever is configured in
+[fastify](https://github.com/fastify/fastify/blob/master/docs/Factory.md#bodylimit)
+ (`1048576` by default).
 
 ## License
 
