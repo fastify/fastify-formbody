@@ -13,7 +13,7 @@ test('succes route succeeds', (t) => {
   fastify
     .register(plugin)
     .post('/test1', (req, res) => {
-      res.send(Object.assign({}, req.body, {message: 'done'}))
+      res.send(Object.assign({}, req.body, { message: 'done' }))
     })
 
   fastify.listen(0, (err) => {
@@ -25,10 +25,10 @@ test('succes route succeeds', (t) => {
       baseUrl: 'http://localhost:' + fastify.server.address().port
     }
     const req = request.defaults(reqOpts)
-    req({uri: '/test1', form: {foo: 'foo'}}, (err, response, body) => {
+    req({ uri: '/test1', form: { foo: 'foo' } }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 200)
-      t.deepEqual(JSON.parse(body), {foo: 'foo', message: 'done'})
+      t.deepEqual(JSON.parse(body), { foo: 'foo', message: 'done' })
     })
   })
 })
@@ -38,9 +38,9 @@ test('cannot exceed body limit', (t) => {
   const fastify = Fastify()
 
   fastify
-    .register(plugin, {bodyLimit: 10})
+    .register(plugin, { bodyLimit: 10 })
     .post('/limited', (req, res) => {
-      res.send(Object.assign({}, req.body, {message: 'done'}))
+      res.send(Object.assign({}, req.body, { message: 'done' }))
     })
 
   fastify.listen(0, (err) => {
@@ -53,7 +53,7 @@ test('cannot exceed body limit', (t) => {
     }
     const req = request.defaults(reqOpts)
     const payload = require('crypto').randomBytes(128).toString('hex')
-    req({uri: '/limited', form: {foo: payload}}, (err, response, body) => {
+    req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
       t.is(JSON.parse(body).message, 'Request body is too large')
@@ -73,9 +73,9 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
   })
 
   fastify
-    .register(plugin, {bodyLimit: 10})
+    .register(plugin, { bodyLimit: 10 })
     .post('/limited', (req, res) => {
-      res.send(Object.assign({}, req.body, {message: 'done'}))
+      res.send(Object.assign({}, req.body, { message: 'done' }))
     })
 
   fastify.listen(0, (err) => {
@@ -97,7 +97,7 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
         sent = true
       }
     })
-    req({uri: '/limited', body: payload}, (err, response, body) => {
+    req({ uri: '/limited', body: payload }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
       t.is(JSON.parse(body).message, 'Request body is too large')
@@ -107,12 +107,12 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
 
 test('cannot exceed body limit set on Fastify instance', (t) => {
   t.plan(3)
-  const fastify = Fastify({bodyLimit: 10})
+  const fastify = Fastify({ bodyLimit: 10 })
 
   fastify
     .register(plugin)
     .post('/limited', (req, res) => {
-      res.send(Object.assign({}, req.body, {message: 'done'}))
+      res.send(Object.assign({}, req.body, { message: 'done' }))
     })
 
   fastify.listen(0, (err) => {
@@ -125,7 +125,7 @@ test('cannot exceed body limit set on Fastify instance', (t) => {
     }
     const req = request.defaults(reqOpts)
     const payload = require('crypto').randomBytes(128).toString('hex')
-    req({uri: '/limited', form: {foo: payload}}, (err, response, body) => {
+    req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
       t.is(JSON.parse(body).message, 'Request body is too large')
@@ -135,12 +135,12 @@ test('cannot exceed body limit set on Fastify instance', (t) => {
 
 test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
   t.plan(3)
-  const fastify = Fastify({bodyLimit: 100000})
+  const fastify = Fastify({ bodyLimit: 100000 })
 
   fastify
-    .register(plugin, {bodyLimit: 10})
+    .register(plugin, { bodyLimit: 10 })
     .post('/limited', (req, res) => {
-      res.send(Object.assign({}, req.body, {message: 'done'}))
+      res.send(Object.assign({}, req.body, { message: 'done' }))
     })
 
   fastify.listen(0, (err) => {
@@ -153,7 +153,7 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
     }
     const req = request.defaults(reqOpts)
     const payload = require('crypto').randomBytes(128).toString('hex')
-    req({uri: '/limited', form: {foo: payload}}, (err, response, body) => {
+    req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
       t.is(JSON.parse(body).message, 'Request body is too large')
