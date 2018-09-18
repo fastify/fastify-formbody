@@ -12,7 +12,7 @@ function formBodyPlugin (fastify, options, next) {
 
   fastify.addContentTypeParser(
     'application/x-www-form-urlencoded',
-    {parseAs: 'buffer', bodyLimit: opts.bodyLimit},
+    { parseAs: 'buffer', bodyLimit: opts.bodyLimit },
     contentParser
   )
   next()
