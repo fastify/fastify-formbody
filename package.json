@@ -7,7 +7,9 @@
     "test": "tap 'test/**/*.test.js'",
     "test-ci": "tap --cov 'test/**/*.test.js'",
     "lint": "standard | snazzy",
-    "lint-ci": "standard"
+    "lint-ci": "standard",
+    "coverage": "tap 'test/**/*.test.js' --cov --coverage-report=text-lcov --coverage-report=html",
+    "coveralls": "tap 'test/**/*.test.js' --cov --coverage-report=text-lcov | coveralls"
   },
   "precommit": [
     "lint",
