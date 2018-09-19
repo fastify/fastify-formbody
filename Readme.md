@@ -55,4 +55,4 @@ whatever is configured in
 
 ## License
 
-[MIT License](http://jsumners.mit-license.org/)
+Licensed under [MIT](./LICENSE)
