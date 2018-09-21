@@ -7,7 +7,8 @@
     "test": "tap 'test/**/*.test.js'",
     "test-ci": "tap --cov 'test/**/*.test.js'",
     "lint": "standard | snazzy",
-    "lint-ci": "standard"
+    "lint-ci": "standard",
+    "codecov": "codecov"
   },
   "precommit": [
     "lint",
@@ -28,6 +29,7 @@
   },
   "homepage": "https://github.com/fastify/fastify-formbody#readme",
   "devDependencies": {
+    "codecov": "^3.1.0",
     "fastify": "^1.0.0",
     "pre-commit": "^1.2.2",
     "request": "^2.88.0",

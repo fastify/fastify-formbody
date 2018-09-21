@@ -10,6 +10,9 @@ script:
   - npm run lint-ci
   - npm run test-ci
 
+after_script:
+  - npm run codecov
+
 notifications:
   email:
     on_success: never
