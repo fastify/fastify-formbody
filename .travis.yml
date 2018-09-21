@@ -11,7 +11,7 @@ script:
   - npm run test-ci
 
 after_script:
-  - bash <(curl -s https://codecov.io/bash)
+  - npm run codecov
 
 notifications:
   email:
