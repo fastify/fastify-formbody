@@ -5,7 +5,7 @@
   "main": "formbody.js",
   "scripts": {
     "test": "tap 'test/**/*.test.js'",
-    "test-ci": "tap --cov 'test/**/*.test.js'",
+    "test-ci": "tap 'test/**/*.test.js' --coverage-report=html",
     "lint": "standard | snazzy",
     "lint-ci": "standard",
     "codecov": "codecov"
