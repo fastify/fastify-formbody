@@ -9,7 +9,6 @@
     "lint": "standard | snazzy",
     "lint-ci": "standard",
     "coverage": "tap 'test/**/*.test.js' --cov --coverage-report=text-lcov --coverage-report=html",
-    "coveralls": "tap 'test/**/*.test.js' --cov --coverage-report=text-lcov | coveralls"
   },
   "precommit": [
     "lint",
@@ -30,7 +29,6 @@
   },
   "homepage": "https://github.com/fastify/fastify-formbody#readme",
   "devDependencies": {
-    "coveralls": "^3.0.2",
     "fastify": "^1.0.0",
     "pre-commit": "^1.2.2",
     "request": "^2.88.0",
