@@ -11,6 +11,8 @@
 A simple plugin for [Fastify][fastify] that adds a content type parser for
 the content type `application/x-www-form-urlencoded`.
 
+Supports Fastify versions `^1.0.0`
+
 [fastify]: https://www.fastify.io/
 
 ## Example
