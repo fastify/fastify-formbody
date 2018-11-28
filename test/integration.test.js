@@ -56,7 +56,7 @@ test('cannot exceed body limit', (t) => {
     req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'Request body is too large')
+      t.is(JSON.parse(body).message, 'FST_ERR_CTP_BODY_TOO_LARGE: Request body is too large')
     })
   })
 })
@@ -100,7 +100,7 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
     req({ uri: '/limited', body: payload }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'Request body is too large')
+      t.is(JSON.parse(body).message, 'FST_ERR_CTP_BODY_TOO_LARGE: Request body is too large')
     })
   })
 })
@@ -128,7 +128,7 @@ test('cannot exceed body limit set on Fastify instance', (t) => {
     req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'Request body is too large')
+      t.is(JSON.parse(body).message, 'FST_ERR_CTP_BODY_TOO_LARGE: Request body is too large')
     })
   })
 })
@@ -156,7 +156,7 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
     req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'Request body is too large')
+      t.is(JSON.parse(body).message, 'FST_ERR_CTP_BODY_TOO_LARGE: Request body is too large')
     })
   })
 })
