@@ -40,7 +40,7 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
-    "fastify-plugin": "^1.0.0",
+    "fastify-plugin": "^1.4.0",
     "qs": "^6.5.1"
   }
 }
