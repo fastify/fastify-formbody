@@ -42,5 +42,6 @@
   "dependencies": {
     "fastify-plugin": "^1.0.0",
     "qs": "^6.5.1"
-  }
+  },
+  "types": "formbody.d.ts"
 }
