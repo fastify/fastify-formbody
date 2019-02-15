@@ -3,7 +3,11 @@ import * as fastify from 'fastify'
 
 declare namespace formBodyPlugin {
   interface FormBodyPluginOptions {
-    bodyLimit?: number
+    bodyLimit?: number,
+    multipart?: {
+      onlyBuffer?: boolean,
+      limits?: any
+    }
   }
 }
 
