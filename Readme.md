@@ -59,6 +59,10 @@ whatever is configured in
 [fastify](https://github.com/fastify/fastify/blob/master/docs/Factory.md#bodylimit)
  (`1048576` by default).
 
++ `multipart`: provides settings for the multipart content type, this would include
+`onlyBuffer` (defaults to true) which would only provide the buffer to the body, otherwise
+the buffer and filename are provided. Additionally, [Busboy](https://github.com/mscdex/busboy#busboy-methods) settings can be applied here
+
 ## License
 
 Licensed under [MIT](./LICENSE)

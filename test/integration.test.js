@@ -3,6 +3,8 @@
 const tap = require('tap')
 const test = tap.test
 const Fastify = require('fastify')
+const fs = require('fs')
+const path = require('path')
 const request = require('request')
 const plugin = require('../')
 
@@ -157,6 +159,52 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
       t.is(JSON.parse(body).message, 'FST_ERR_CTP_BODY_TOO_LARGE: Request body is too large')
+    })
+  })
+})
+
+test('upload file', (t) => {
+  t.plan(3)
+  const fastify = Fastify()
+
+  fastify
+    .register(plugin)
+    .post('/upload', (req, res) => {
+      res.send(Object.assign({}, req.body, { message: 'done' }))
+    })
+
+  fastify.listen(0, (err) => {
+    if (err) tap.error(err)
+    fastify.server.unref()
+
+    const reqOpts = {
+      method: 'POST',
+      baseUrl: 'http://localhost:' + fastify.server.address().port
+    }
+    const req = request.defaults(reqOpts)
+    req({
+      uri: '/upload',
+      formData: {
+        my_file: fs.createReadStream(path.join(__dirname, '..', 'Readme.md'))
+      }
+    }, (err, response, body) => {
+      const file = fs.createReadStream(path.join(__dirname, '..', 'Readme.md'))
+      let buffer = []
+
+      file.on('data', (data) => { buffer.push(data) })
+      file.on('end', () => {
+        buffer = Buffer.concat(buffer.map((part) => Buffer.isBuffer(part) ? part : Buffer.from(part)))
+
+        t.error(err)
+        t.strictEqual(response.statusCode, 200)
+        t.deepEqual(JSON.parse(body), {
+          my_file: {
+            buffer: JSON.parse(JSON.stringify(buffer)),
+            filename: 'Readme.md'
+          },
+          message: 'done'
+        })
+      })
     })
   })
 })

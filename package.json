@@ -1,6 +1,6 @@
 {
   "name": "fastify-formbody",
-  "version": "3.1.0",
+  "version": "3.2.0",
   "description": "A module for Fastify to parse x-www-form-urlencoded bodies",
   "main": "formbody.js",
   "scripts": {
@@ -40,6 +40,7 @@
     "typescript": "^3.2.2"
   },
   "dependencies": {
+    "busboy": "^0.3.0",
     "fastify-plugin": "^1.0.0",
     "qs": "^6.5.1"
   },
