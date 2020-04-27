@@ -1,17 +1,9 @@
-import * as http from 'http'
-import * as fastify from 'fastify'
+import { FastifyPlugin } from 'fastify'
 
-declare namespace formBodyPlugin {
-  interface FormBodyPluginOptions {
-    bodyLimit?: number
-  }
+export interface FormBodyPluginOptions {
+  bodyLimit?: number
 }
 
-declare let formBodyPlugin: fastify.Plugin<
-  http.Server,
-  http.IncomingMessage,
-  http.ServerResponse,
-  formBodyPlugin.FormBodyPluginOptions
->
+declare const formBodyPlugin: FastifyPlugin<FormBodyPluginOptions>
 
-export = formBodyPlugin
+export default formBodyPlugin

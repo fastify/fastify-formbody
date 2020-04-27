@@ -10,11 +10,10 @@ test('succes route succeeds', (t) => {
   t.plan(3)
   const fastify = Fastify()
 
-  fastify
-    .register(plugin)
-    .post('/test1', (req, res) => {
-      res.send(Object.assign({}, req.body, { message: 'done' }))
-    })
+  fastify.register(plugin)
+  fastify.post('/test1', (req, res) => {
+    res.send(Object.assign({}, req.body, { message: 'done' }))
+  })
 
   fastify.listen(0, (err) => {
     if (err) tap.error(err)
@@ -37,11 +36,10 @@ test('cannot exceed body limit', (t) => {
   t.plan(3)
   const fastify = Fastify()
 
-  fastify
-    .register(plugin, { bodyLimit: 10 })
-    .post('/limited', (req, res) => {
-      res.send(Object.assign({}, req.body, { message: 'done' }))
-    })
+  fastify.register(plugin, { bodyLimit: 10 })
+  fastify.post('/limited', (req, res) => {
+    res.send(Object.assign({}, req.body, { message: 'done' }))
+  })
 
   fastify.listen(0, (err) => {
     if (err) tap.error(err)
@@ -56,7 +54,7 @@ test('cannot exceed body limit', (t) => {
     req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'FST_ERR_CTP_BODY_TOO_LARGE: Request body is too large')
+      t.is(JSON.parse(body).message, 'Request body is too large')
     })
   })
 })
@@ -72,11 +70,10 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
     setTimeout(next, 1)
   })
 
-  fastify
-    .register(plugin, { bodyLimit: 10 })
-    .post('/limited', (req, res) => {
-      res.send(Object.assign({}, req.body, { message: 'done' }))
-    })
+  fastify.register(plugin, { bodyLimit: 10 })
+  fastify.post('/limited', (req, res) => {
+    res.send(Object.assign({}, req.body, { message: 'done' }))
+  })
 
   fastify.listen(0, (err) => {
     if (err) tap.error(err)
@@ -100,7 +97,7 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
     req({ uri: '/limited', body: payload }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'FST_ERR_CTP_BODY_TOO_LARGE: Request body is too large')
+      t.is(JSON.parse(body).message, 'Request body is too large')
     })
   })
 })
@@ -109,11 +106,10 @@ test('cannot exceed body limit set on Fastify instance', (t) => {
   t.plan(3)
   const fastify = Fastify({ bodyLimit: 10 })
 
-  fastify
-    .register(plugin)
-    .post('/limited', (req, res) => {
-      res.send(Object.assign({}, req.body, { message: 'done' }))
-    })
+  fastify.register(plugin)
+  fastify.post('/limited', (req, res) => {
+    res.send(Object.assign({}, req.body, { message: 'done' }))
+  })
 
   fastify.listen(0, (err) => {
     if (err) tap.error(err)
@@ -128,7 +124,7 @@ test('cannot exceed body limit set on Fastify instance', (t) => {
     req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'FST_ERR_CTP_BODY_TOO_LARGE: Request body is too large')
+      t.is(JSON.parse(body).message, 'Request body is too large')
     })
   })
 })
@@ -137,11 +133,10 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
   t.plan(3)
   const fastify = Fastify({ bodyLimit: 100000 })
 
-  fastify
-    .register(plugin, { bodyLimit: 10 })
-    .post('/limited', (req, res) => {
-      res.send(Object.assign({}, req.body, { message: 'done' }))
-    })
+  fastify.register(plugin, { bodyLimit: 10 })
+  fastify.post('/limited', (req, res) => {
+    res.send(Object.assign({}, req.body, { message: 'done' }))
+  })
 
   fastify.listen(0, (err) => {
     if (err) tap.error(err)
@@ -156,7 +151,7 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
     req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
       t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'FST_ERR_CTP_BODY_TOO_LARGE: Request body is too large')
+      t.is(JSON.parse(body).message, 'Request body is too large')
     })
   })
 })

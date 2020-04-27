@@ -1,5 +1,5 @@
-import fastify = require('fastify')
-import formBodyPlugin = require('./formbody')
+import fastify from 'fastify'
+import formBodyPlugin from './formbody'
 
 const app = fastify()
 app.register(formBodyPlugin)
