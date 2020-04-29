@@ -4,12 +4,12 @@
   "description": "A module for Fastify to parse x-www-form-urlencoded bodies",
   "main": "formbody.js",
   "scripts": {
-    "test": "tap test/**/*.test.js",
+    "test": "standard && tap test/**/*.test.js && tsd",
     "test-ci": "tap test/**/*.test.js --coverage-report=html",
     "lint": "standard | snazzy",
     "lint-ci": "standard",
     "codecov": "codecov",
-    "typescript": "tsc --project ./tsconfig.json"
+    "typescript": "tsd"
   },
   "precommit": [
     "lint",
@@ -31,22 +31,18 @@
   "homepage": "https://github.com/fastify/fastify-formbody#readme",
   "devDependencies": {
     "codecov": "^3.1.0",
-    "fastify": "^2.0.0",
+    "fastify": "^3.0.0-alpha.1",
     "pre-commit": "^1.2.2",
     "request": "^2.88.0",
     "snazzy": "^8.0.0",
     "standard": "^14.0.2",
     "tap": "^12.6.5",
-    "typescript": "^3.2.2"
+    "typescript": "^3.2.2",
+    "tsd": "^0.11.0"
   },
   "dependencies": {
-    "fastify-plugin": "^1.0.0",
+    "fastify-plugin": "^2.0.0",
     "qs": "^6.5.1"
   },
-  "types": "formbody.d.ts",
-  "greenkeeper": {
-    "ignore": [
-      "tap"
-    ]
-  }
+  "types": "formbody.d.ts"
 }
