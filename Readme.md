@@ -6,12 +6,13 @@
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![codecov](https://codecov.io/gh/fastify/fastify-formbody/branch/master/graph/badge.svg)](https://codecov.io/gh/fastify/fastify-formbody)
 [![Known Vulnerabilities](https://snyk.io/test/github/fastify/fastify-formbody/badge.svg)](https://snyk.io/test/github/fastify/fastify-formbody)
-[![Greenkeeper badge](https://badges.greenkeeper.io/fastify/fastify-formbody.svg)](https://greenkeeper.io/)
 
 A simple plugin for [Fastify][fastify] that adds a content type parser for
 the content type `application/x-www-form-urlencoded`.
 
 [fastify]: https://www.fastify.io/
+
+This branch targets Fastify v3. Please refer to [this branch](https://github.com/fastify/fastify-formbody/tree/3.x) and related versions for Fastify `^2.0.0` compatibility.
 
 ## Example
 
