@@ -4,7 +4,7 @@ const fp = require('fastify-plugin')
 const qs = require('qs')
 
 function formBodyPlugin (fastify, options, next) {
-  const opts = Object.assign({}, options || {})
+  const opts = Object.assign({}, options)
 
   function contentParser (req, body, done) {
     done(null, qs.parse(body.toString()))
