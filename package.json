@@ -1,6 +1,6 @@
 {
   "name": "fastify-formbody",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "A module for Fastify to parse x-www-form-urlencoded bodies",
   "main": "formbody.js",
   "scripts": {
@@ -30,15 +30,16 @@
   },
   "homepage": "https://github.com/fastify/fastify-formbody#readme",
   "devDependencies": {
+    "@types/node": "^14.0.18",
     "codecov": "^3.1.0",
-    "fastify": "^3.0.0-rc.4",
+    "fastify": "^3.0.0",
     "pre-commit": "^1.2.2",
     "request": "^2.88.0",
     "snazzy": "^8.0.0",
     "standard": "^14.0.2",
     "tap": "^14.10.7",
-    "typescript": "^3.2.2",
-    "tsd": "^0.11.0"
+    "tsd": "^0.13.1",
+    "typescript": "^3.2.2"
   },
   "dependencies": {
     "fastify-plugin": "^2.0.0",
