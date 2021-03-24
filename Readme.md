@@ -1,8 +1,8 @@
 # fastify-formbody
 
+![CI](https://github.com/fastify/fastify-formbody/workflows/CI/badge.svg)
 [![NPM version](https://img.shields.io/npm/v/fastify-formbody.svg?style=flat)](https://www.npmjs.com/package/fastify-formbody)
 [![NPM downloads](https://img.shields.io/npm/dm/fastify-formbody.svg?style=flat)](https://www.npmjs.com/package/fastify-formbody)
-[![Build Status](https://travis-ci.org/fastify/fastify-formbody.svg?branch=master)](https://travis-ci.org/fastify/fastify-formbody)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![codecov](https://codecov.io/gh/fastify/fastify-formbody/branch/master/graph/badge.svg)](https://codecov.io/gh/fastify/fastify-formbody)
 [![Known Vulnerabilities](https://snyk.io/test/github/fastify/fastify-formbody/badge.svg)](https://snyk.io/test/github/fastify/fastify-formbody)
