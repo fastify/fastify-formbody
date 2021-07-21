@@ -27,8 +27,8 @@ test('succes route succeeds', (t) => {
     const req = request.defaults(reqOpts)
     req({ uri: '/test1', form: { foo: 'foo' } }, (err, response, body) => {
       t.error(err)
-      t.strictEqual(response.statusCode, 200)
-      t.deepEqual(JSON.parse(body), { foo: 'foo', message: 'done' })
+      t.equal(response.statusCode, 200)
+      t.same(JSON.parse(body), { foo: 'foo', message: 'done' })
     })
   })
 })
@@ -54,8 +54,8 @@ test('cannot exceed body limit', (t) => {
     const payload = require('crypto').randomBytes(128).toString('hex')
     req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
-      t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'Request body is too large')
+      t.equal(response.statusCode, 413)
+      t.equal(JSON.parse(body).message, 'Request body is too large')
     })
   })
 })
@@ -88,7 +88,7 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
       }
     }
     const req = request.defaults(reqOpts)
-    var sent = false
+    let sent = false
     const payload = require('stream').Readable({
       read: function () {
         this.push(sent ? null : Buffer.alloc(70000, 'a'))
@@ -97,8 +97,8 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
     })
     req({ uri: '/limited', body: payload }, (err, response, body) => {
       t.error(err)
-      t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'Request body is too large')
+      t.equal(response.statusCode, 413)
+      t.equal(JSON.parse(body).message, 'Request body is too large')
     })
   })
 })
@@ -124,8 +124,8 @@ test('cannot exceed body limit set on Fastify instance', (t) => {
     const payload = require('crypto').randomBytes(128).toString('hex')
     req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
-      t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'Request body is too large')
+      t.equal(response.statusCode, 413)
+      t.equal(JSON.parse(body).message, 'Request body is too large')
     })
   })
 })
@@ -151,8 +151,8 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
     const payload = require('crypto').randomBytes(128).toString('hex')
     req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
       t.error(err)
-      t.strictEqual(response.statusCode, 413)
-      t.is(JSON.parse(body).message, 'Request body is too large')
+      t.equal(response.statusCode, 413)
+      t.equal(JSON.parse(body).message, 'Request body is too large')
     })
   })
 })
@@ -188,8 +188,8 @@ test('plugin should not parse nested objects by default', (t) => {
     const req = request.defaults(reqOpts)
     req({ uri: '/test1', form: { 'foo[one]': 'foo', 'foo[two]': 'bar' } }, (err, response, body) => {
       t.error(err)
-      t.strictEqual(response.statusCode, 200)
-      t.deepEqual(JSON.parse(body), { 'foo[one]': 'foo', 'foo[two]': 'bar', message: 'done' })
+      t.equal(response.statusCode, 200)
+      t.same(JSON.parse(body), { 'foo[one]': 'foo', 'foo[two]': 'bar', message: 'done' })
     })
   })
 })
@@ -215,8 +215,8 @@ test('plugin should allow providing custom parser as option', (t) => {
     const req = request.defaults(reqOpts)
     req({ uri: '/test1', form: { 'foo[one]': 'foo', 'foo[two]': 'bar' } }, (err, response, body) => {
       t.error(err)
-      t.strictEqual(response.statusCode, 200)
-      t.deepEqual(JSON.parse(body), { foo: { one: 'foo', two: 'bar' }, message: 'done' })
+      t.equal(response.statusCode, 200)
+      t.same(JSON.parse(body), { foo: { one: 'foo', two: 'bar' }, message: 'done' })
     })
   })
 })
