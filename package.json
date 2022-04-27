@@ -1,6 +1,6 @@
 {
-  "name": "fastify-formbody",
-  "version": "5.2.0",
+  "name": "@fastify/formbody",
+  "version": "6.0.0",
   "description": "A module for Fastify to parse x-www-form-urlencoded bodies",
   "main": "formbody.js",
   "scripts": {
@@ -45,5 +45,8 @@
   "dependencies": {
     "fastify-plugin": "^3.0.0"
   },
-  "types": "formbody.d.ts"
+  "types": "formbody.d.ts",
+  "publishConfig": {
+    "access": "public"
+  }
 }
