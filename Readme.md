@@ -1,8 +1,8 @@
-# fastify-formbody
+# @fastify/formbody
 
 ![CI](https://github.com/fastify/fastify-formbody/workflows/CI/badge.svg)
-[![NPM version](https://img.shields.io/npm/v/fastify-formbody.svg?style=flat)](https://www.npmjs.com/package/fastify-formbody)
-[![NPM downloads](https://img.shields.io/npm/dm/fastify-formbody.svg?style=flat)](https://www.npmjs.com/package/fastify-formbody)
+[![NPM version](https://img.shields.io/npm/v/@fastify/formbody.svg?style=flat)](https://www.npmjs.com/package/@fastify/formbody)
+[![NPM downloads](https://img.shields.io/npm/dm/fastify-formbody.svg?style=flat)](https://www.npmjs.com/package/@fastify/formbody)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
 [![codecov](https://codecov.io/gh/fastify/fastify-formbody/branch/master/graph/badge.svg)](https://codecov.io/gh/fastify/fastify-formbody)
 [![Known Vulnerabilities](https://snyk.io/test/github/fastify/fastify-formbody/badge.svg)](https://snyk.io/test/github/fastify/fastify-formbody)
@@ -21,7 +21,7 @@ Given the following code:
 ```js
 const fastify = require('fastify')()
 
-fastify.register(require('fastify-formbody'))
+fastify.register(require('@fastify/formbody'))
 
 fastify.post('/', (req, reply) => {
   reply.send(req.body)
@@ -59,7 +59,7 @@ is configured on the parent Fastify instance. The default value is
 whatever is configured in
 [fastify](https://github.com/fastify/fastify/blob/master/docs/Factory.md#bodylimit)
  (`1048576` by default).
-+ `parser`: The default parser used is the querystring.parse built-in.  You can change this default by passing a parser function e.g. `fastify.register(require('fastify-formbody'), { parser: str => myParser(str) })`
++ `parser`: The default parser used is the querystring.parse built-in.  You can change this default by passing a parser function e.g. `fastify.register(require('@fastify/formbody'), { parser: str => myParser(str) })`
 
 ## Upgrading from 4.x
 
@@ -78,7 +78,7 @@ If you need nested parsing, you must configure it manually by installing the qs 
 ```js
 const fastify = require('fastify')()
 const qs = require('qs')
-fastify.register(require('fastify-formbody'), { parser: str => qs.parse(str) })
+fastify.register(require('@fastify/formbody'), { parser: str => qs.parse(str) })
 ```
 
 ## License
