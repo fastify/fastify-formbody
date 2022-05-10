@@ -16,7 +16,7 @@ test('succes route succeeds', (t) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
@@ -42,7 +42,7 @@ test('cannot exceed body limit', (t) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
@@ -76,7 +76,7 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
@@ -112,7 +112,7 @@ test('cannot exceed body limit set on Fastify instance', (t) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
@@ -139,7 +139,7 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
@@ -161,7 +161,7 @@ test('plugin should throw if opts.parser is not a function', (t) => {
   t.plan(2)
   const fastify = Fastify()
   fastify.register(plugin, { parser: 'invalid' })
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err) => {
     t.ok(err)
     t.match(err.message, /parser must be a function/)
     fastify.server.unref()
@@ -177,7 +177,7 @@ test('plugin should not parse nested objects by default', (t) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
@@ -204,7 +204,7 @@ test('plugin should allow providing custom parser as option', (t) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen(0, (err) => {
+  fastify.listen({ port: 0 }, (err) => {
     if (err) tap.error(err)
     fastify.server.unref()
 

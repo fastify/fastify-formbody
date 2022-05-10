@@ -32,7 +32,7 @@
   "devDependencies": {
     "@types/node": "^17.0.0",
     "codecov": "^3.7.2",
-    "fastify": "^3.3.0",
+    "fastify": "^4.0.0-rc.2",
     "pre-commit": "^1.2.2",
     "qs": "^6.5.1",
     "request": "^2.88.0",
