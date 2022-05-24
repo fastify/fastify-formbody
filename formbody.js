@@ -27,6 +27,6 @@ function formBodyPlugin (fastify, options, next) {
 }
 
 module.exports = fp(formBodyPlugin, {
-  fastify: '^4.0.0',
+  fastify: '4.x',
   name: '@fastify/formbody'
 })
