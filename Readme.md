@@ -10,7 +10,9 @@ the content type `application/x-www-form-urlencoded`.
 
 [fastify]: https://www.fastify.io/
 
-This branch targets Fastify v3. Please refer to [this branch](https://github.com/fastify/fastify-formbody/tree/3.x) and related versions for Fastify `^2.0.0` compatibility.
+This branch targets Fastify v4. Please refer to [this branch](https://github.com/fastify/fastify-formbody/tree/3.x) and related versions for Fastify `^2.0.0` compatibility.
+
+For Fastify v3 support, please use @fastify/formbody `^6.0.1`.
 
 ## Example
 
