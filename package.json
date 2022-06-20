@@ -30,7 +30,7 @@
   },
   "homepage": "https://github.com/fastify/fastify-formbody#readme",
   "devDependencies": {
-    "@types/node": "^17.0.0",
+    "@types/node": "^18.0.0",
     "codecov": "^3.7.2",
     "fastify": "^4.0.0-rc.2",
     "pre-commit": "^1.2.2",
