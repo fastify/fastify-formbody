@@ -27,7 +27,7 @@ fastify.post('/', (req, reply) => {
   reply.send(req.body)
 })
 
-fastify.listen(8000, (err) => {
+fastify.listen({ port: 8000 }, (err) => {
   if (err) throw err
 })
 ```
