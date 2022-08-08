@@ -1,6 +1,6 @@
 import fastify from 'fastify'
 import querystring from 'querystring'
-import formBodyPlugin, { FormBodyPluginOptions } from './formbody'
+import formBodyPlugin, { FormBodyPluginOptions } from '..'
 
 const app = fastify()
 app.register(formBodyPlugin)

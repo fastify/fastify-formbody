@@ -3,9 +3,9 @@
 const tap = require('tap')
 const test = tap.test
 const Fastify = require('fastify')
-const request = require('request')
 const plugin = require('../')
 const qs = require('qs')
+const formAutoContent = require('form-auto-content')
 
 test('succes route succeeds', (t) => {
   t.plan(3)
@@ -20,15 +20,10 @@ test('succes route succeeds', (t) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
-    const reqOpts = {
-      method: 'POST',
-      baseUrl: 'http://localhost:' + fastify.server.address().port
-    }
-    const req = request.defaults(reqOpts)
-    req({ uri: '/test1', form: { foo: 'foo' } }, (err, response, body) => {
+    fastify.inject({ path: '/test1', method: 'POST', ...formAutoContent({ foo: 'foo' }) }, (err, response) => {
       t.error(err)
       t.equal(response.statusCode, 200)
-      t.same(JSON.parse(body), { foo: 'foo', message: 'done' })
+      t.same(JSON.parse(response.body), { foo: 'foo', message: 'done' })
     })
   })
 })
@@ -46,16 +41,11 @@ test('cannot exceed body limit', (t) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
-    const reqOpts = {
-      method: 'POST',
-      baseUrl: 'http://localhost:' + fastify.server.address().port
-    }
-    const req = request.defaults(reqOpts)
     const payload = require('crypto').randomBytes(128).toString('hex')
-    req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
+    fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
       t.error(err)
       t.equal(response.statusCode, 413)
-      t.equal(JSON.parse(body).message, 'Request body is too large')
+      t.equal(JSON.parse(response.body).message, 'Request body is too large')
     })
   })
 })
@@ -80,14 +70,6 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
-    const reqOpts = {
-      method: 'POST',
-      baseUrl: 'http://localhost:' + fastify.server.address().port,
-      headers: {
-        'content-type': 'application/x-www-form-urlencoded'
-      }
-    }
-    const req = request.defaults(reqOpts)
     let sent = false
     const payload = require('stream').Readable({
       read: function () {
@@ -95,10 +77,10 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
         sent = true
       }
     })
-    req({ uri: '/limited', body: payload }, (err, response, body) => {
+    fastify.inject({ path: '/limited', method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: payload }, (err, response) => {
       t.error(err)
       t.equal(response.statusCode, 413)
-      t.equal(JSON.parse(body).message, 'Request body is too large')
+      t.equal(JSON.parse(response.body).message, 'Request body is too large')
     })
   })
 })
@@ -116,16 +98,11 @@ test('cannot exceed body limit set on Fastify instance', (t) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
-    const reqOpts = {
-      method: 'POST',
-      baseUrl: 'http://localhost:' + fastify.server.address().port
-    }
-    const req = request.defaults(reqOpts)
     const payload = require('crypto').randomBytes(128).toString('hex')
-    req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
+    fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
       t.error(err)
       t.equal(response.statusCode, 413)
-      t.equal(JSON.parse(body).message, 'Request body is too large')
+      t.equal(JSON.parse(response.body).message, 'Request body is too large')
     })
   })
 })
@@ -143,16 +120,11 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
-    const reqOpts = {
-      method: 'POST',
-      baseUrl: 'http://localhost:' + fastify.server.address().port
-    }
-    const req = request.defaults(reqOpts)
     const payload = require('crypto').randomBytes(128).toString('hex')
-    req({ uri: '/limited', form: { foo: payload } }, (err, response, body) => {
+    fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
       t.error(err)
       t.equal(response.statusCode, 413)
-      t.equal(JSON.parse(body).message, 'Request body is too large')
+      t.equal(JSON.parse(response.body).message, 'Request body is too large')
     })
   })
 })
@@ -181,15 +153,10 @@ test('plugin should not parse nested objects by default', (t) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
-    const reqOpts = {
-      method: 'POST',
-      baseUrl: 'http://localhost:' + fastify.server.address().port
-    }
-    const req = request.defaults(reqOpts)
-    req({ uri: '/test1', form: { 'foo[one]': 'foo', 'foo[two]': 'bar' } }, (err, response, body) => {
+    fastify.inject({ path: '/test1', method: 'POST', ...formAutoContent({ 'foo[one]': 'foo', 'foo[two]': 'bar' }) }, (err, response) => {
       t.error(err)
       t.equal(response.statusCode, 200)
-      t.same(JSON.parse(body), { 'foo[one]': 'foo', 'foo[two]': 'bar', message: 'done' })
+      t.same(JSON.parse(response.body), { 'foo[one]': 'foo', 'foo[two]': 'bar', message: 'done' })
     })
   })
 })
@@ -208,15 +175,10 @@ test('plugin should allow providing custom parser as option', (t) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
-    const reqOpts = {
-      method: 'POST',
-      baseUrl: 'http://localhost:' + fastify.server.address().port
-    }
-    const req = request.defaults(reqOpts)
-    req({ uri: '/test1', form: { 'foo[one]': 'foo', 'foo[two]': 'bar' } }, (err, response, body) => {
+    fastify.inject({ path: '/test1', method: 'POST', ...formAutoContent({ 'foo[one]': 'foo', 'foo[two]': 'bar' }) }, (err, response) => {
       t.error(err)
       t.equal(response.statusCode, 200)
-      t.same(JSON.parse(body), { foo: { one: 'foo', two: 'bar' }, message: 'done' })
+      t.same(JSON.parse(response.body), { foo: { one: 'foo', two: 'bar' }, message: 'done' })
     })
   })
 })
