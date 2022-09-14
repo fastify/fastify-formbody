@@ -57,7 +57,7 @@ before returning an error. If the limit is exceeded, a `500` error will be
 returned immediately. When set to `undefined` the limit will be set to whatever
 is configured on the parent Fastify instance. The default value is
 whatever is configured in
-[fastify](https://github.com/fastify/fastify/blob/master/docs/Factory.md#bodylimit)
+[fastify](https://github.com/fastify/fastify/blob/main/docs/Reference/Server.md#bodylimit)
  (`1048576` by default).
 + `parser`: The default parser used is the querystring.parse built-in.  You can change this default by passing a parser function e.g. `fastify.register(require('@fastify/formbody'), { parser: str => myParser(str) })`
 
