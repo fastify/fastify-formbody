@@ -1,7 +1,7 @@
 'use strict'
 
 const fp = require('fastify-plugin')
-const { parse } = require('querystring')
+const { parse } = require('fast-querystring')
 
 function defaultParser (str) {
   return parse(str)
