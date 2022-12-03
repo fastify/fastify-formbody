@@ -7,7 +7,7 @@ function defaultParser (str) {
   return parse(str)
 }
 
-function formBodyPlugin (fastify, options, next) {
+function fastifyFormbody (fastify, options, next) {
   const opts = Object.assign({ parser: defaultParser }, options)
   if (typeof opts.parser !== 'function') {
     next(new Error('parser must be a function'))
@@ -26,7 +26,9 @@ function formBodyPlugin (fastify, options, next) {
   next()
 }
 
-module.exports = fp(formBodyPlugin, {
+module.exports = fp(fastifyFormbody, {
   fastify: '4.x',
   name: '@fastify/formbody'
 })
+module.exports.default = fastifyFormbody
+module.exports.fastifyFormbody = fastifyFormbody
