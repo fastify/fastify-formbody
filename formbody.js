@@ -1,11 +1,7 @@
 'use strict'
 
 const fp = require('fastify-plugin')
-const { parse } = require('fast-querystring')
-
-function defaultParser (str) {
-  return parse(str)
-}
+const { parse: defaultParser } = require('fast-querystring')
 
 function formBodyPlugin (fastify, options, next) {
   const opts = Object.assign({ parser: defaultParser }, options)
