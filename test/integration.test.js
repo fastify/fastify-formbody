@@ -41,7 +41,7 @@ test('cannot exceed body limit', (t) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
-    const payload = require('crypto').randomBytes(128).toString('hex')
+    const payload = require('node:crypto').randomBytes(128).toString('hex')
     fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
       t.error(err)
       t.equal(response.statusCode, 413)
@@ -71,7 +71,7 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
     fastify.server.unref()
 
     let sent = false
-    const payload = require('stream').Readable({
+    const payload = require('node:stream').Readable({
       read: function () {
         this.push(sent ? null : Buffer.alloc(70000, 'a'))
         sent = true
@@ -98,7 +98,7 @@ test('cannot exceed body limit set on Fastify instance', (t) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
-    const payload = require('crypto').randomBytes(128).toString('hex')
+    const payload = require('node:crypto').randomBytes(128).toString('hex')
     fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
       t.error(err)
       t.equal(response.statusCode, 413)
@@ -120,7 +120,7 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
     if (err) tap.error(err)
     fastify.server.unref()
 
-    const payload = require('crypto').randomBytes(128).toString('hex')
+    const payload = require('node:crypto').randomBytes(128).toString('hex')
     fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
       t.error(err)
       t.equal(response.statusCode, 413)
