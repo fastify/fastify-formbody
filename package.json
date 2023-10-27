@@ -3,6 +3,7 @@
   "version": "7.4.0",
   "description": "A module for Fastify to parse x-www-form-urlencoded bodies",
   "main": "formbody.js",
+  "type": "commonjs",
   "scripts": {
     "codecov": "codecov",
     "lint": "standard | snazzy",
