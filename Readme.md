@@ -8,7 +8,7 @@
 A simple plugin for [Fastify][fastify] that adds a content type parser for
 the content type `application/x-www-form-urlencoded`.
 
-[fastify]: https://www.fastify.dev/
+[fastify]: https://fastify.dev/
 
 This branch targets Fastify v4. Please refer to [this branch](https://github.com/fastify/fastify-formbody/tree/3.x) and related versions for Fastify `^2.0.0` compatibility.
 
