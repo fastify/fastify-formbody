@@ -14,6 +14,12 @@ This branch targets Fastify v4. Please refer to [this branch](https://github.com
 
 For Fastify v3 support, please use @fastify/formbody `^6.0.1`.
 
+## Install
+
+```
+npm i @fastify/formbody
+```
+
 ## Example
 
 Given the following code:
