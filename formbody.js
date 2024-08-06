@@ -23,7 +23,7 @@ function fastifyFormbody (fastify, options, next) {
 }
 
 module.exports = fp(fastifyFormbody, {
-  fastify: '4.x',
+  fastify: '5.x',
   name: '@fastify/formbody'
 })
 module.exports.default = fastifyFormbody
