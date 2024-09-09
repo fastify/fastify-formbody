@@ -171,7 +171,7 @@ test('plugin should allow providing custom parser as option', (t) => {
   })
 
   fastify.listen({ port: 0 }, (err) => {
-    t.assert.ifError(err)  // First assertion for checking error from `fastify.listen`
+    t.assert.ifError(err) // First assertion for checking error from `fastify.listen`
     fastify.server.unref()
 
     fastify.inject({ path: '/test1', method: 'POST', ...formAutoContent({ 'foo[one]': 'foo', 'foo[two]': 'bar' }) }, (err, response) => {
