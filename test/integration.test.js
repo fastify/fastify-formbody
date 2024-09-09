@@ -1,14 +1,13 @@
 'use strict'
 
-const tap = require('tap')
-const test = tap.test
+const test = require('node:test')
 const Fastify = require('fastify')
 const plugin = require('../')
 const qs = require('qs')
 const formAutoContent = require('form-auto-content')
 
 test('succes route succeeds', (t) => {
-  t.plan(3)
+  // t.plan(3)
   const fastify = Fastify()
 
   fastify.register(plugin)
@@ -17,19 +16,19 @@ test('succes route succeeds', (t) => {
   })
 
   fastify.listen({ port: 0 }, (err) => {
-    if (err) tap.error(err)
+    t.assert.ifError(err)
     fastify.server.unref()
 
     fastify.inject({ path: '/test1', method: 'POST', ...formAutoContent({ foo: 'foo' }) }, (err, response) => {
-      t.error(err)
-      t.equal(response.statusCode, 200)
-      t.same(JSON.parse(response.body), { foo: 'foo', message: 'done' })
+      t.assert.ifError(err)
+      t.assert.strictEqual(response.statusCode, 200)
+      t.assert.deepStrictEqual(JSON.parse(response.body), { foo: 'foo', message: 'done' })
     })
   })
 })
 
 test('cannot exceed body limit', (t) => {
-  t.plan(3)
+  // t.plan(3)
   const fastify = Fastify()
 
   fastify.register(plugin, { bodyLimit: 10 })
@@ -38,25 +37,25 @@ test('cannot exceed body limit', (t) => {
   })
 
   fastify.listen({ port: 0 }, (err) => {
-    if (err) tap.error(err)
+    t.assert.ifError(err)
     fastify.server.unref()
 
     const payload = require('node:crypto').randomBytes(128).toString('hex')
     fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
-      t.error(err)
-      t.equal(response.statusCode, 413)
-      t.equal(JSON.parse(response.body).message, 'Request body is too large')
+      t.assert.ifError(err)
+      t.assert.strictEqual(response.statusCode, 413)
+      t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
     })
   })
 })
 
 test('cannot exceed body limit when Content-Length is not available', (t) => {
-  t.plan(3)
+  // t.plan(3)
   const fastify = Fastify()
 
   fastify.addHook('onSend', (request, reply, payload, next) => {
     reply.send = function mockSend (arg) {
-      t.fail('reply.send() was called multiple times')
+      t.assert.fail('reply.send() was called multiple times')
     }
     setTimeout(next, 1)
   })
@@ -67,7 +66,7 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
   })
 
   fastify.listen({ port: 0 }, (err) => {
-    if (err) tap.error(err)
+    t.assert.ifError(err)
     fastify.server.unref()
 
     let sent = false
@@ -78,15 +77,15 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
       }
     })
     fastify.inject({ path: '/limited', method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: payload }, (err, response) => {
-      t.error(err)
-      t.equal(response.statusCode, 413)
-      t.equal(JSON.parse(response.body).message, 'Request body is too large')
+      t.assert.ifError(err)
+      t.assert.strictEqual(response.statusCode, 413)
+      t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
     })
   })
 })
 
 test('cannot exceed body limit set on Fastify instance', (t) => {
-  t.plan(3)
+  // t.plan(3)
   const fastify = Fastify({ bodyLimit: 10 })
 
   fastify.register(plugin)
@@ -95,20 +94,20 @@ test('cannot exceed body limit set on Fastify instance', (t) => {
   })
 
   fastify.listen({ port: 0 }, (err) => {
-    if (err) tap.error(err)
+    t.assert.ifError(err)
     fastify.server.unref()
 
     const payload = require('node:crypto').randomBytes(128).toString('hex')
     fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
-      t.error(err)
-      t.equal(response.statusCode, 413)
-      t.equal(JSON.parse(response.body).message, 'Request body is too large')
+      t.assert.ifError(err)
+      t.assert.strictEqual(response.statusCode, 413)
+      t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
     })
   })
 })
 
 test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
-  t.plan(3)
+  // t.plan(3)
   const fastify = Fastify({ bodyLimit: 100000 })
 
   fastify.register(plugin, { bodyLimit: 10 })
@@ -117,31 +116,31 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
   })
 
   fastify.listen({ port: 0 }, (err) => {
-    if (err) tap.error(err)
+    t.assert.ifError(err)
     fastify.server.unref()
 
     const payload = require('node:crypto').randomBytes(128).toString('hex')
     fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
-      t.error(err)
-      t.equal(response.statusCode, 413)
-      t.equal(JSON.parse(response.body).message, 'Request body is too large')
+      t.assert.ifError(err)
+      t.assert.strictEqual(response.statusCode, 413)
+      t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
     })
   })
 })
 
 test('plugin should throw if opts.parser is not a function', (t) => {
-  t.plan(2)
+  // t.plan(2)
   const fastify = Fastify()
   fastify.register(plugin, { parser: 'invalid' })
   fastify.listen({ port: 0 }, (err) => {
-    t.ok(err)
-    t.match(err.message, /parser must be a function/)
+    t.assert.ok(err)
+    t.assert.match(err.message, /parser must be a function/)
     fastify.server.unref()
   })
 })
 
 test('plugin should not parse nested objects by default', (t) => {
-  t.plan(3)
+  // t.plan(3)
   const fastify = Fastify()
 
   fastify.register(plugin)
@@ -150,19 +149,19 @@ test('plugin should not parse nested objects by default', (t) => {
   })
 
   fastify.listen({ port: 0 }, (err) => {
-    if (err) tap.error(err)
+    t.assert.ifError(err)
     fastify.server.unref()
 
     fastify.inject({ path: '/test1', method: 'POST', ...formAutoContent({ 'foo[one]': 'foo', 'foo[two]': 'bar' }) }, (err, response) => {
-      t.error(err)
-      t.equal(response.statusCode, 200)
-      t.same(JSON.parse(response.body), { 'foo[one]': 'foo', 'foo[two]': 'bar', message: 'done' })
+      t.assert.ifError(err)
+      t.assert.strictEqual(response.statusCode, 200)
+      t.assert.deepStrictEqual(JSON.parse(response.body), { 'foo[one]': 'foo', 'foo[two]': 'bar', message: 'done' })
     })
   })
 })
 
 test('plugin should allow providing custom parser as option', (t) => {
-  t.plan(3)
+  // t.plan(3)
   const fastify = Fastify()
 
   // this makes sure existing users for <= 4 have upgrade path
@@ -172,13 +171,13 @@ test('plugin should allow providing custom parser as option', (t) => {
   })
 
   fastify.listen({ port: 0 }, (err) => {
-    if (err) tap.error(err)
+    t.assert.ifError(err)  // First assertion for checking error from `fastify.listen`
     fastify.server.unref()
 
     fastify.inject({ path: '/test1', method: 'POST', ...formAutoContent({ 'foo[one]': 'foo', 'foo[two]': 'bar' }) }, (err, response) => {
-      t.error(err)
-      t.equal(response.statusCode, 200)
-      t.same(JSON.parse(response.body), { foo: { one: 'foo', two: 'bar' }, message: 'done' })
+      t.assert.ifError(err)
+      t.assert.strictEqual(response.statusCode, 200)
+      t.assert.deepStrictEqual(JSON.parse(response.body), { foo: { one: 'foo', two: 'bar' }, message: 'done' })
     })
   })
 })
