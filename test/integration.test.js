@@ -6,51 +6,53 @@ const plugin = require('../')
 const qs = require('qs')
 const formAutoContent = require('form-auto-content')
 
-test('succes route succeeds', (t) => {
-  // t.plan(3)
+test('success route succeeds', async (t) => {
+  t.plan(3)
   const fastify = Fastify()
 
-  fastify.register(plugin)
+  await fastify.register(plugin)
   fastify.post('/test1', (req, res) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen({ port: 0 }, (err) => {
-    t.assert.ifError(err)
-    fastify.server.unref()
+  await fastify.listen({ port: 0 })
+  fastify.server.unref()
 
-    fastify.inject({ path: '/test1', method: 'POST', ...formAutoContent({ foo: 'foo' }) }, (err, response) => {
-      t.assert.ifError(err)
-      t.assert.strictEqual(response.statusCode, 200)
-      t.assert.deepStrictEqual(JSON.parse(response.body), { foo: 'foo', message: 'done' })
-    })
+  const response = await fastify.inject({
+    path: '/test1',
+    method: 'POST',
+    ...formAutoContent({ foo: 'foo' })
   })
+  t.assert.ifError(response.error)
+  t.assert.strictEqual(response.statusCode, 200)
+  t.assert.deepStrictEqual(JSON.parse(response.body), { foo: 'foo', message: 'done' })
 })
 
-test('cannot exceed body limit', (t) => {
-  // t.plan(3)
+test('cannot exceed body limit', async (t) => {
+  t.plan(3)
   const fastify = Fastify()
 
-  fastify.register(plugin, { bodyLimit: 10 })
+  await fastify.register(plugin, { bodyLimit: 10 })
   fastify.post('/limited', (req, res) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen({ port: 0 }, (err) => {
-    t.assert.ifError(err)
-    fastify.server.unref()
+  await fastify.listen({ port: 0 })
+  fastify.server.unref()
 
-    const payload = require('node:crypto').randomBytes(128).toString('hex')
-    fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
-      t.assert.ifError(err)
-      t.assert.strictEqual(response.statusCode, 413)
-      t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
-    })
+  const payload = require('node:crypto').randomBytes(128).toString('hex')
+  const response = await fastify.inject({
+    path: '/limited',
+    method: 'POST',
+    ...formAutoContent({ foo: payload })
   })
+  t.assert.ifError(response.error)
+  t.assert.strictEqual(response.statusCode, 413)
+  t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
 })
 
-test('cannot exceed body limit when Content-Length is not available', (t) => {
-  // t.plan(3)
+test('cannot exceed body limit when Content-Length is not available', async (t) => {
+  t.plan(3)
   const fastify = Fastify()
 
   fastify.addHook('onSend', (request, reply, payload, next) => {
@@ -60,54 +62,59 @@ test('cannot exceed body limit when Content-Length is not available', (t) => {
     setTimeout(next, 1)
   })
 
-  fastify.register(plugin, { bodyLimit: 10 })
+  await fastify.register(plugin, { bodyLimit: 10 })
   fastify.post('/limited', (req, res) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen({ port: 0 }, (err) => {
-    t.assert.ifError(err)
-    fastify.server.unref()
+  await fastify.listen({ port: 0 })
+  fastify.server.unref()
 
-    let sent = false
-    const payload = require('node:stream').Readable({
-      read: function () {
-        this.push(sent ? null : Buffer.alloc(70000, 'a'))
-        sent = true
-      }
-    })
-    fastify.inject({ path: '/limited', method: 'POST', headers: { 'content-type': 'application/x-www-form-urlencoded' }, body: payload }, (err, response) => {
-      t.assert.ifError(err)
-      t.assert.strictEqual(response.statusCode, 413)
-      t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
-    })
+  let sent = false
+  const payload = require('node:stream').Readable({
+    read: function () {
+      this.push(sent ? null : Buffer.alloc(70000, 'a'))
+      sent = true
+    }
   })
+
+  const response = await fastify.inject({
+    path: '/limited',
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    body: payload
+  })
+  t.assert.ifError(response.error)
+  t.assert.strictEqual(response.statusCode, 413)
+  t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
 })
 
-test('cannot exceed body limit set on Fastify instance', (t) => {
-  // t.plan(3)
+test('cannot exceed body limit set on Fastify instance', async (t) => {
+  t.plan(3)
   const fastify = Fastify({ bodyLimit: 10 })
 
-  fastify.register(plugin)
+  await fastify.register(plugin)
   fastify.post('/limited', (req, res) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen({ port: 0 }, (err) => {
-    t.assert.ifError(err)
-    fastify.server.unref()
+  await fastify.listen({ port: 0 })
+  fastify.server.unref()
 
-    const payload = require('node:crypto').randomBytes(128).toString('hex')
-    fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
-      t.assert.ifError(err)
-      t.assert.strictEqual(response.statusCode, 413)
-      t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
-    })
+  const payload = require('node:crypto').randomBytes(128).toString('hex')
+  const response = await fastify.inject({
+    path: '/limited',
+    method: 'POST',
+    ...formAutoContent({ foo: payload })
   })
+  t.assert.ifError(response.error)
+  t.assert.strictEqual(response.statusCode, 413)
+  t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
 })
 
-test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
-  // t.plan(3)
+test('plugin bodyLimit should overwrite Fastify instance bodyLimit', async (t) => {
+  t.plan(3)
+
   const fastify = Fastify({ bodyLimit: 100000 })
 
   fastify.register(plugin, { bodyLimit: 10 })
@@ -115,32 +122,36 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', (t) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen({ port: 0 }, (err) => {
-    t.assert.ifError(err)
-    fastify.server.unref()
+  await fastify.listen({ port: 0 })
+  fastify.server.unref()
 
-    const payload = require('node:crypto').randomBytes(128).toString('hex')
-    fastify.inject({ path: '/limited', method: 'POST', ...formAutoContent({ foo: payload }) }, (err, response) => {
-      t.assert.ifError(err)
-      t.assert.strictEqual(response.statusCode, 413)
-      t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
-    })
+  const payload = require('node:crypto').randomBytes(128).toString('hex')
+  const response = await fastify.inject({
+    path: '/limited',
+    method: 'POST',
+    ...formAutoContent({ foo: payload })
   })
+  t.assert.ifError(response.error)
+  t.assert.strictEqual(response.statusCode, 413)
+  t.assert.strictEqual(JSON.parse(response.body).message, 'Request body is too large')
 })
 
-test('plugin should throw if opts.parser is not a function', (t) => {
-  // t.plan(2)
+test('plugin should throw if opts.parser is not a function', async (t) => {
+  t.plan(2)
   const fastify = Fastify()
-  fastify.register(plugin, { parser: 'invalid' })
-  fastify.listen({ port: 0 }, (err) => {
+  try {
+    await fastify.register(plugin, { parser: 'invalid' })
+    await fastify.listen({ port: 0 })
+  } catch (err) {
     t.assert.ok(err)
     t.assert.match(err.message, /parser must be a function/)
+  } finally {
     fastify.server.unref()
-  })
+  }
 })
 
-test('plugin should not parse nested objects by default', (t) => {
-  // t.plan(3)
+test('plugin should not parse nested objects by default', async (t) => {
+  t.plan(3)
   const fastify = Fastify()
 
   fastify.register(plugin)
@@ -148,20 +159,21 @@ test('plugin should not parse nested objects by default', (t) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen({ port: 0 }, (err) => {
-    t.assert.ifError(err)
-    fastify.server.unref()
+  await fastify.listen({ port: 0 })
+  fastify.server.unref()
 
-    fastify.inject({ path: '/test1', method: 'POST', ...formAutoContent({ 'foo[one]': 'foo', 'foo[two]': 'bar' }) }, (err, response) => {
-      t.assert.ifError(err)
-      t.assert.strictEqual(response.statusCode, 200)
-      t.assert.deepStrictEqual(JSON.parse(response.body), { 'foo[one]': 'foo', 'foo[two]': 'bar', message: 'done' })
-    })
+  const response = await fastify.inject({
+    path: '/test1',
+    method: 'POST',
+    ...formAutoContent({ 'foo[one]': 'foo', 'foo[two]': 'bar' })
   })
+  t.assert.ifError(response.error)
+  t.assert.strictEqual(response.statusCode, 200)
+  t.assert.deepStrictEqual(JSON.parse(response.body), { 'foo[one]': 'foo', 'foo[two]': 'bar', message: 'done' })
 })
 
-test('plugin should allow providing custom parser as option', (t) => {
-  // t.plan(3)
+test('plugin should allow providing custom parser as option', async (t) => {
+  t.plan(3)
   const fastify = Fastify()
 
   // this makes sure existing users for <= 4 have upgrade path
@@ -170,14 +182,15 @@ test('plugin should allow providing custom parser as option', (t) => {
     res.send(Object.assign({}, req.body, { message: 'done' }))
   })
 
-  fastify.listen({ port: 0 }, (err) => {
-    t.assert.ifError(err) // First assertion for checking error from `fastify.listen`
-    fastify.server.unref()
+  await fastify.listen({ port: 0 })
+  fastify.server.unref()
 
-    fastify.inject({ path: '/test1', method: 'POST', ...formAutoContent({ 'foo[one]': 'foo', 'foo[two]': 'bar' }) }, (err, response) => {
-      t.assert.ifError(err)
-      t.assert.strictEqual(response.statusCode, 200)
-      t.assert.deepStrictEqual(JSON.parse(response.body), { foo: { one: 'foo', two: 'bar' }, message: 'done' })
-    })
+  const response = await fastify.inject({
+    path: '/test1',
+    method: 'POST',
+    ...formAutoContent({ 'foo[one]': 'foo', 'foo[two]': 'bar' })
   })
+  t.assert.ifError(response.error)
+  t.assert.strictEqual(response.statusCode, 200)
+  t.assert.deepStrictEqual(JSON.parse(response.body), { foo: { one: 'foo', two: 'bar' }, message: 'done' })
 })
