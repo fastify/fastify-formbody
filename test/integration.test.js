@@ -7,7 +7,6 @@ const qs = require('qs')
 const formAutoContent = require('form-auto-content')
 
 test('success route succeeds', async (t) => {
-  t.plan(3)
   const fastify = Fastify()
 
   await fastify.register(plugin)
@@ -29,7 +28,6 @@ test('success route succeeds', async (t) => {
 })
 
 test('cannot exceed body limit', async (t) => {
-  t.plan(3)
   const fastify = Fastify()
 
   await fastify.register(plugin, { bodyLimit: 10 })
@@ -52,7 +50,6 @@ test('cannot exceed body limit', async (t) => {
 })
 
 test('cannot exceed body limit when Content-Length is not available', async (t) => {
-  t.plan(3)
   const fastify = Fastify()
 
   fastify.addHook('onSend', (request, reply, payload, next) => {
@@ -90,7 +87,6 @@ test('cannot exceed body limit when Content-Length is not available', async (t) 
 })
 
 test('cannot exceed body limit set on Fastify instance', async (t) => {
-  t.plan(3)
   const fastify = Fastify({ bodyLimit: 10 })
 
   await fastify.register(plugin)
@@ -113,8 +109,6 @@ test('cannot exceed body limit set on Fastify instance', async (t) => {
 })
 
 test('plugin bodyLimit should overwrite Fastify instance bodyLimit', async (t) => {
-  t.plan(3)
-
   const fastify = Fastify({ bodyLimit: 100000 })
 
   fastify.register(plugin, { bodyLimit: 10 })
@@ -137,7 +131,6 @@ test('plugin bodyLimit should overwrite Fastify instance bodyLimit', async (t) =
 })
 
 test('plugin should throw if opts.parser is not a function', async (t) => {
-  t.plan(2)
   const fastify = Fastify()
   try {
     await fastify.register(plugin, { parser: 'invalid' })
@@ -151,7 +144,6 @@ test('plugin should throw if opts.parser is not a function', async (t) => {
 })
 
 test('plugin should not parse nested objects by default', async (t) => {
-  t.plan(3)
   const fastify = Fastify()
 
   fastify.register(plugin)
@@ -173,7 +165,6 @@ test('plugin should not parse nested objects by default', async (t) => {
 })
 
 test('plugin should allow providing custom parser as option', async (t) => {
-  t.plan(3)
   const fastify = Fastify()
 
   // this makes sure existing users for <= 4 have upgrade path
