@@ -1,6 +1,6 @@
 {
   "name": "@fastify/formbody",
-  "version": "8.0.0",
+  "version": "8.0.1",
   "description": "A module for Fastify to parse x-www-form-urlencoded bodies",
   "main": "formbody.js",
   "type": "commonjs",
