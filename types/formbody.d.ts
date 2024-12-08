@@ -17,5 +17,5 @@ declare namespace fastifyFormbody {
   export { fastifyFormbody as default }
 }
 
-declare function fastifyFormbody(...params: Parameters<FastifyFormbody>): ReturnType<FastifyFormbody>
+declare function fastifyFormbody (...params: Parameters<FastifyFormbody>): ReturnType<FastifyFormbody>
 export = fastifyFormbody
