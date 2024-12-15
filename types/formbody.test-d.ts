@@ -1,5 +1,5 @@
 import fastify from 'fastify'
-import querystring from 'querystring'
+import querystring from 'node:querystring'
 import { expectDeprecated, expectError, expectType } from 'tsd'
 import formBodyPlugin, { FastifyFormbodyOptions, FormBodyPluginOptions } from '..'
 
