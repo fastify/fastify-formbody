@@ -3,7 +3,7 @@
 [![CI](https://github.com/fastify/fastify-formbody/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/fastify/fastify-formbody/actions/workflows/ci.yml)
 [![NPM version](https://img.shields.io/npm/v/@fastify/formbody.svg?style=flat)](https://www.npmjs.com/package/@fastify/formbody)
 [![NPM downloads](https://img.shields.io/npm/dm/fastify-formbody.svg?style=flat)](https://www.npmjs.com/package/@fastify/formbody)
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+[![neostandard javascript style](https://img.shields.io/badge/code_style-neostandard-brightgreen?style=flat)](https://github.com/neostandard/neostandard)
 
 A simple plugin for [Fastify][fastify] that adds a content type parser for
 the content type `application/x-www-form-urlencoded`.
