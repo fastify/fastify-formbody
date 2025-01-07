@@ -52,8 +52,8 @@ test('cannot exceed body limit', async (t) => {
 test('cannot exceed body limit when Content-Length is not available', async (t) => {
   const fastify = Fastify()
 
-  fastify.addHook('onSend', (request, reply, payload, next) => {
-    reply.send = function mockSend (arg) {
+  fastify.addHook('onSend', (_request, reply, _payload, next) => {
+    reply.send = function mockSend () {
       t.assert.fail('reply.send() was called multiple times')
     }
     setTimeout(next, 1)

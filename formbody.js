@@ -10,7 +10,7 @@ function fastifyFormbody (fastify, options, next) {
     return
   }
 
-  function contentParser (req, body, done) {
+  function contentParser (_req, body, done) {
     done(null, opts.parser(body.toString()))
   }
 
