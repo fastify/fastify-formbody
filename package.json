@@ -1,6 +1,6 @@
 {
   "name": "@fastify/formbody",
-  "version": "8.0.1",
+  "version": "8.0.2",
   "description": "A module for Fastify to parse x-www-form-urlencoded bodies",
   "main": "formbody.js",
   "type": "commonjs",
@@ -25,7 +25,7 @@
     "x-www-form-urlencoded"
   ],
   "author": "James Sumners <james.sumners@gmail.com>",
- "contributors": [
+  "contributors": [
     {
       "name": "Matteo Collina",
       "email": "hello@matteocollina.com"
