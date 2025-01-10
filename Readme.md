@@ -10,15 +10,26 @@ the content type `application/x-www-form-urlencoded`.
 
 [fastify]: https://fastify.dev/
 
-This branch targets Fastify v4. Please refer to [this branch](https://github.com/fastify/fastify-formbody/tree/3.x) and related versions for Fastify `^2.0.0` compatibility.
-
-For Fastify v3 support, please use @fastify/formbody `^6.0.1`.
-
 ## Install
 
 ```
 npm i @fastify/formbody
 ```
+
+
+### Compatibility
+| Plugin version | Fastify version |
+| ---------------|-----------------|
+| `^8.x`         | `^5.x`          |
+| `^7.x`         | `^4.x`          |
+| `^6.x`         | `^3.x`          |
+| `^3.x`         | `^2.x`          |
+| `^2.x`         | `^1.x`          |
+
+
+Please note that if a Fastify version is out of support, then so are the corresponding versions of this plugin
+in the table above.
+See [Fastify's LTS policy](https://github.com/fastify/fastify/blob/main/docs/Reference/LTS.md) for more details.
 
 ## Example
 
@@ -89,4 +100,4 @@ fastify.register(require('@fastify/formbody'), { parser: str => qs.parse(str) })
 
 ## License
 
-Licensed under [MIT](./LICENSE)
+Licensed under [MIT](./LICENSE).
