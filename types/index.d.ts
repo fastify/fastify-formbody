@@ -8,11 +8,6 @@ declare namespace fastifyFormbody {
     parser?: (str: string) => Record<string, unknown>
   }
 
-  /**
-   * @deprecated Use FastifyFormbodyOptions instead
-   */
-  export type FormBodyPluginOptions = FastifyFormbodyOptions
-
   export const fastifyFormbody: FastifyFormbody
   export { fastifyFormbody as default }
 }
