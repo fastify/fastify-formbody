@@ -2,7 +2,7 @@
   "name": "@fastify/formbody",
   "version": "8.0.2",
   "description": "A module for Fastify to parse x-www-form-urlencoded bodies",
-  "main": "formbody.js",
+  "main": "index.js",
   "type": "commonjs",
   "scripts": {
     "codecov": "codecov",
@@ -10,7 +10,7 @@
     "lint:fix": "eslint --fix",
     "test": "npm run test:unit && npm run test:typescript",
     "test:unit": "c8 --100 node --test",
-    "test:typescript": "tsd"
+    "test:typescript": "tstyche"
   },
   "repository": {
     "type": "git",
@@ -63,13 +63,13 @@
     "form-auto-content": "^3.2.1",
     "neostandard": "^0.13.0",
     "qs": "^6.12.0",
-    "tsd": "^0.33.0"
+    "tstyche": "^7.0.0"
   },
   "dependencies": {
     "fast-querystring": "^1.1.2",
     "fastify-plugin": "^5.0.0"
   },
-  "types": "types/formbody.d.ts",
+  "types": "types/index.d.ts",
   "publishConfig": {
     "access": "public"
   }
