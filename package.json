@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "fast-querystring": "^1.1.2",
-    "fastify-plugin": "^5.0.0"
+    "fastify-plugin": "^6.0.0"
   },
   "types": "types/index.d.ts",
   "publishConfig": {
