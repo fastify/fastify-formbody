@@ -185,3 +185,27 @@ test('plugin should allow providing custom parser as option', async (t) => {
   t.assert.strictEqual(response.statusCode, 200)
   t.assert.deepStrictEqual(JSON.parse(response.body), { foo: { one: 'foo', two: 'bar' }, message: 'done' })
 })
+
+test('custom parser errors are handled by Fastify', async (t) => {
+  const fastify = Fastify()
+
+  await fastify.register(plugin, {
+    parser: () => {
+      const error = new Error('Invalid form body')
+      error.statusCode = 400
+      throw error
+    }
+  })
+  fastify.post('/parse', (req, reply) => {
+    reply.send(req.body)
+  })
+
+  const response = await fastify.inject({
+    path: '/parse',
+    method: 'POST',
+    headers: { 'content-type': 'application/x-www-form-urlencoded' },
+    payload: 'invalid'
+  })
+  t.assert.strictEqual(response.statusCode, 400)
+  t.assert.strictEqual(JSON.parse(response.body).message, 'Invalid form body')
+})
