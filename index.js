@@ -12,7 +12,7 @@ function fastifyFormbody (fastify, options, next) {
 
   function contentParser (_req, body, done) {
     try {
-      done(opts.parser(body.toString()))
+      done(null, opts.parser(body.toString()))
     } catch (err) {
       done(err)
     }
