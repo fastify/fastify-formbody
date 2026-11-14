@@ -11,14 +11,11 @@ function fastifyFormbody (fastify, options, next) {
   }
 
   function contentParser (_req, body, done) {
-    let parsed
     try {
-      parsed = opts.parser(body.toString())
+      done(opts.parser(body.toString()))
     } catch (err) {
       done(err)
-      return
     }
-    done(null, parsed)
   }
 
   fastify.addContentTypeParser(
